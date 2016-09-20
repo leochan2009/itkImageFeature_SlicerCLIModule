@@ -1,15 +1,15 @@
 
 cmake_minimum_required(VERSION 3.2)
 #-----------------------------------------------------------------------------
-set(MODULE_NAME HessianRecursiveGaussianImage)
+set(MODULE_NAME Hessian3DToVesselnessMeasureImage)
 
 #-----------------------------------------------------------------------------
 
 #
 # SlicerExecutionModel
 #
-#find_package(SlicerExecutionModel REQUIRED)
-#include(${SlicerExecutionModel_USE_FILE})
+find_package(SlicerExecutionModel REQUIRED)
+include(${SlicerExecutionModel_USE_FILE})
 if(NOT Slicer_SOURCE_DIR)
   find_package(Slicer REQUIRED)
   include(${Slicer_USE_FILE})

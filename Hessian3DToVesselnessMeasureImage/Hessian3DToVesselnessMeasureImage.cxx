@@ -1,8 +1,8 @@
 #include "itkImageFileWriter.h"
 
-#include "itkHessianRecursiveGaussianImageFilter.h"
+#include "itkHessian3DToVesselnessMeasureImageFilter.h"
 #include "itkPluginUtilities.h"
-#include "HessianRecursiveGaussianImageCLP.h"
+#include "Hessian3DToVesselnessMeasureImageCLP.h"
 
 // Use an anonymous namespace to keep class types and function names
 // from colliding when module is used as shared object module.  Every
@@ -16,35 +16,32 @@ template <class T>
 int DoIt( int argc, char * argv[], T )
 {
   PARSE_ARGS;
+  
+  typedef    T OutputPixelType;
 
-  typedef    T InputPixelType;
-
-  typedef itk::Image<InputPixelType,  3> InputImageType;
-  //vesselness calculation only accept image of double type as input
-  typedef itk::Image<itk::SymmetricSecondRankTensor< double, 3>,  3> OutputImageType;
+  typedef itk::Image<itk::SymmetricSecondRankTensor< double, 3>,  3> InputImageType;
+  typedef itk::Image<OutputPixelType, 3> OutputImageType;
 
   typedef itk::ImageFileReader<InputImageType>  ReaderType;
   typedef itk::ImageFileWriter<OutputImageType> WriterType;
-
-  typedef itk::HessianRecursiveGaussianImageFilter<
-    InputImageType, OutputImageType>  FilterType;
+  typedef itk::Hessian3DToVesselnessMeasureImageFilter<OutputPixelType>  FilterType;
 
   typename ReaderType::Pointer reader = ReaderType::New();
-  itk::PluginFilterWatcher watchReader1(reader, "Read Volume",
-                                        CLPProcessInformation);
 
   reader->SetFileName( inputVolume.c_str() );
 
   typename FilterType::Pointer filter = FilterType::New();
   filter->SetInput( reader->GetOutput() );
-  filter->SetSigma( sigma );
-  itk::PluginFilterWatcher watchFilter(filter, "HessianRecursiveGaussian",
-                                         CLPProcessInformation);
+  if( alpha1 )
+  {
+    filter->SetAlpha1(alpha1);
+  }
+  if( alpha2 )
+  {
+    filter->SetAlpha2(alpha2);
+  }
 
   typename WriterType::Pointer writer = WriterType::New();
-  itk::PluginFilterWatcher watchWriter(writer,
-                                       "Write Volume",
-                                       CLPProcessInformation);
   writer->SetFileName( outputVolume.c_str() );
   writer->SetInput( filter->GetOutput() );
   writer->SetUseCompression(1);

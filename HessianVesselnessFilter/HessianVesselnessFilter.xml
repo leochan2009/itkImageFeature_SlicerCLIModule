@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<executable>
+  <category>Examples</category>
+  <title>HessianVesselnessFilter</title>
+  <description><![CDATA[This is a CLI module that can be bundled in an extension]]></description>
+  <version>0.0.1</version>
+  <documentation-url>http://www.example.com/Slicer/Modules/HessianVesselnessFilter</documentation-url>
+  <license>Slicer</license>
+  <contributor>Longquan Chen(BWH)</contributor>
+  <acknowledgements>This work was partially funded by NIH grant NXNNXXNNNNNN-NNXN</acknowledgements>
+  <parameters>
+    <label>IO</label>
+    <description><![CDATA[Input/output parameters]]></description>
+    <double>
+      <name>sigma</name>
+      <longflag>sigma</longflag>
+      <flag>s</flag>
+      <label>Sigma</label>
+      <description><![CDATA[A double value (in units of mm) passed to the algorithm]]></description>
+      <default>1.0</default>
+    </double>
+    <double>
+      <name>alpha1</name>
+      <longflag>alpha1</longflag>
+      <label>Alpha1</label>
+      <description><![CDATA[An Eigenvalue passed to the algorithm]]></description>
+      <default>-20.0</default>
+    </double>
+    <double>
+      <name>alpha2</name>
+      <longflag>alpha2</longflag>
+      <label>Alpha2</label>
+      <description><![CDATA[An Eigenvalue passed to the algorithm]]></description>
+      <default>-100.0</default>
+    </double>
+    <image>
+      <name>inputVolume</name>
+      <label>Input Volume</label>
+      <channel>input</channel>
+      <index>0</index>
+      <description><![CDATA[Input volume]]></description>
+    </image>
+    <image>
+      <name>outputVolume</name>
+      <label>Output Volume</label>
+      <channel>output</channel>
+      <index>1</index>
+      <description><![CDATA[Output Volume]]></description>
+    </image>
+  </parameters>
+</executable>
